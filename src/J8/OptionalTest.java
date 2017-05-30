@@ -14,7 +14,7 @@ public class OptionalTest {
         //调用工厂方法创建Optional实例
         Optional<String> name = Optional.of("Sanaulla");
         //传入参数为null，抛出NullPointerException.
-        Optional<String> someNull = Optional.of(null);
+       // Optional<String> someNull = Optional.of(null);
         Map<String, Object> paramsMap = new HashMap();
 
         paramsMap.put("username", "xupengju");
@@ -30,10 +30,9 @@ public class OptionalTest {
         Optional empty = Optional.ofNullable(null);
 
         //isPresent方法用来检查Optional实例中是否包含值
-        if (name.isPresent()) {
-            //在Optional实例内调用get()返回已存在的值
-            System.out.println(name.get());//输出Sanaulla
-        }
+        //在Optional实例内调用get()返回已存在的值
+        //输出Sanaulla
+        name.ifPresent(System.out::println);
 
         //执行下面的代码会输出：No value present
         try {
