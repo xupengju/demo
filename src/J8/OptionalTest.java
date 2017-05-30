@@ -11,79 +11,87 @@ import java.util.Optional;
  */
 public class OptionalTest {
     public static void main(String[] args) {
-        //´´½¨OptionalÊµÀı£¬Ò²¿ÉÒÔÍ¨¹ı·½·¨·µ»ØÖµµÃµ½¡£
+        //è°ƒç”¨å·¥å‚æ–¹æ³•åˆ›å»ºOptionalå®ä¾‹
         Optional<String> name = Optional.of("Sanaulla");
+        //ä¼ å…¥å‚æ•°ä¸ºnullï¼ŒæŠ›å‡ºNullPointerException.
+        Optional<String> someNull = Optional.of(null);
         Map<String, Object> paramsMap = new HashMap();
 
-        paramsMap.put("username","xupengju");
-        paramsMap.put("password","xxxxxxx");
+        paramsMap.put("username", "xupengju");
+        paramsMap.put("password", "xxxxxxx");
         //Optional<Map<String, Object>> map = Optional.of(paramsMap);
         Optional<Object> mapValue = Optional.of(paramsMap.get("username"));
         if (mapValue.isPresent()) {
             System.out.println(mapValue.get());
         }
 
-        //´´½¨Ã»ÓĞÖµµÄOptionalÊµÀı£¬ÀıÈçÖµÎª'null'
+        //ä¸‹é¢åˆ›å»ºäº†ä¸€ä¸ªä¸åŒ…å«ä»»ä½•å€¼çš„Optionalå®ä¾‹
+        //ä¾‹å¦‚ï¼Œå€¼ä¸º'null'
         Optional empty = Optional.ofNullable(null);
 
-        //isPresent·½·¨ÓÃÀ´¼ì²éOptionalÊµÀıÊÇ·ñÓĞÖµ¡£
+        //isPresentæ–¹æ³•ç”¨æ¥æ£€æŸ¥Optionalå®ä¾‹ä¸­æ˜¯å¦åŒ…å«å€¼
         if (name.isPresent()) {
-            //µ÷ÓÃget()·µ»ØOptionalÖµ¡£
-            System.out.println(name.get());
+            //åœ¨Optionalå®ä¾‹å†…è°ƒç”¨get()è¿”å›å·²å­˜åœ¨çš„å€¼
+            System.out.println(name.get());//è¾“å‡ºSanaulla
         }
 
+        //æ‰§è¡Œä¸‹é¢çš„ä»£ç ä¼šè¾“å‡ºï¼šNo value present
         try {
-            //ÔÚOptionalÊµÀıÉÏµ÷ÓÃget()Å×³öNoSuchElementException¡£
+            //åœ¨ç©ºçš„Optionalå®ä¾‹ä¸Šè°ƒç”¨get()ï¼ŒæŠ›å‡ºNoSuchElementException
             System.out.println(empty.get());
         } catch (NoSuchElementException ex) {
             System.out.println(ex.getMessage());
+
+            //ifPresentæ–¹æ³•æ¥å—lambdaè¡¨è¾¾å¼ä½œä¸ºå‚æ•°ã€‚
+            //lambdaè¡¨è¾¾å¼å¯¹Optionalçš„å€¼è°ƒç”¨consumerè¿›è¡Œå¤„ç†ã€‚
+            name.ifPresent((value) -> {
+                System.out.println("The length of the value is: " + value.length());
+            });
+
+            //å¦‚æœå€¼ä¸ä¸ºnullï¼ŒorElseæ–¹æ³•è¿”å›Optionalå®ä¾‹çš„å€¼ã€‚
+            //å¦‚æœä¸ºnullï¼Œè¿”å›ä¼ å…¥çš„æ¶ˆæ¯ã€‚
+            //è¾“å‡ºï¼šThere is no value present!
+            System.out.println(empty.orElse("There is no value present!"));
+            //è¾“å‡ºï¼šSanaulla
+            System.out.println(name.orElse("There is some value!"));
+//orElseGetä¸orElseæ–¹æ³•ç±»ä¼¼ï¼ŒåŒºåˆ«åœ¨äºorElseä¼ å…¥çš„æ˜¯é»˜è®¤å€¼ï¼Œ
+//orElseGetå¯ä»¥æ¥å—ä¸€ä¸ªlambdaè¡¨è¾¾å¼ç”Ÿæˆé»˜è®¤å€¼ã€‚
+//è¾“å‡ºï¼šDefault Value
+            System.out.println(empty.orElseGet(() -> "Default Value"));
+//è¾“å‡ºï¼šSanaulla
+            System.out.println(name.orElseGet(() -> "Default Value"));
+            try {
+                //orElseThrowä¸orElseæ–¹æ³•ç±»ä¼¼ã€‚ä¸è¿”å›é»˜è®¤å€¼ä¸åŒï¼Œ
+                //orElseThrowä¼šæŠ›å‡ºlambdaè¡¨è¾¾å¼æˆ–æ–¹æ³•ç”Ÿæˆçš„å¼‚å¸¸
+
+                empty.orElseThrow(ValueAbsentException::new);
+            } catch (Throwable e) {
+                //è¾“å‡º: No value present in the Optional instance
+                System.out.println(e.getMessage());
+            }
+
+            //mapæ–¹æ³•æ‰§è¡Œä¼ å…¥çš„lambdaè¡¨è¾¾å¼å‚æ•°å¯¹Optionalå®ä¾‹çš„å€¼è¿›è¡Œä¿®æ”¹ã€‚
+            //ä¸ºlambdaè¡¨è¾¾å¼çš„è¿”å›å€¼åˆ›å»ºæ–°çš„Optionalå®ä¾‹ä½œä¸ºmapæ–¹æ³•çš„è¿”å›å€¼ã€‚
+            Optional<String> upperName = name.map((value) -> value.toUpperCase());
+            System.out.println(upperName.orElse("No value found"));
+
+            //flatMapä¸mapï¼ˆFunctionï¼‰éå¸¸ç±»ä¼¼ï¼ŒåŒºåˆ«åœ¨äºä¼ å…¥æ–¹æ³•çš„lambdaè¡¨è¾¾å¼çš„è¿”å›ç±»å‹ã€‚
+            //mapæ–¹æ³•ä¸­çš„lambdaè¡¨è¾¾å¼è¿”å›å€¼å¯ä»¥æ˜¯ä»»æ„ç±»å‹ï¼Œåœ¨mapå‡½æ•°è¿”å›ä¹‹å‰ä¼šåŒ…è£…ä¸ºOptionalã€‚
+            //ä½†flatMapæ–¹æ³•ä¸­çš„lambdaè¡¨è¾¾å¼è¿”å›å€¼å¿…é¡»æ˜¯Optionlå®ä¾‹ã€‚
+            upperName = name.flatMap((value) -> Optional.of(value.toUpperCase()));
+            System.out.println(upperName.orElse("No value found"));//è¾“å‡ºSANAULLA
+            //filteræ–¹æ³•æ£€æŸ¥ç»™å®šçš„Optionå€¼æ˜¯å¦æ»¡è¶³æŸäº›æ¡ä»¶ã€‚
+            //å¦‚æœæ»¡è¶³åˆ™è¿”å›åŒä¸€ä¸ªOptionå®ä¾‹ï¼Œå¦åˆ™è¿”å›ç©ºOptionalã€‚
+            Optional<String> longName = name.filter((value) -> value.length() > 6);
+            System.out.println(longName.orElse("The name is less than 6 characters"));//è¾“å‡ºSanaulla
+
+            //å¦ä¸€ä¸ªä¾‹å­æ˜¯Optionalå€¼ä¸æ»¡è¶³filteræŒ‡å®šçš„æ¡ä»¶ã€‚
+            Optional<String> anotherName = Optional.of("Sana");
+            Optional<String> shortName = anotherName.filter((value) -> value.length() > 6);
+            //è¾“å‡ºï¼šnameé•¿åº¦ä¸è¶³6å­—ç¬¦
+            System.out.println(shortName.orElse("The name is less than 6 characters"));
+
         }
-
-        //ifPresent·½·¨½ÓÊÜlambda±í´ïÊ½²ÎÊı¡£
-        //Èç¹ûOptionalÖµ²»Îª¿Õ£¬lambda±í´ïÊ½»á´¦Àí²¢ÔÚÆäÉÏÖ´ĞĞ²Ù×÷¡£
-        name.ifPresent((value) -> {
-            System.out.println("The length of the value is: " + value.length());
-        });
-
-        //Èç¹ûÓĞÖµorElse·½·¨»á·µ»ØOptionalÊµÀı£¬·ñÔò·µ»Ø´«ÈëµÄ´íÎóĞÅÏ¢¡£
-        System.out.println(empty.orElse("There is no value present!"));
-        System.out.println(name.orElse("There is some value!"));
-
-        //orElseGetÓëorElseÀàËÆ£¬Çø±ğÔÚÓÚ´«ÈëµÄÄ¬ÈÏÖµ¡£
-        //orElseGet½ÓÊÜlambda±í´ïÊ½Éú³ÉÄ¬ÈÏÖµ¡£
-        System.out.println(empty.orElseGet(() -> "Default Value"));
-        System.out.println(name.orElseGet(() -> "Default Value"));
-
-        try {
-            //orElseThrowÓëorElse·½·¨ÀàËÆ£¬Çø±ğÔÚÓÚ·µ»ØÖµ¡£
-            //orElseThrowÅ×³öÓÉ´«ÈëµÄlambda±í´ïÊ½/·½·¨Éú³ÉÒì³£¡£
-            empty.orElseThrow(ValueAbsentException::new);
-        } catch (Throwable ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        //map·½·¨Í¨¹ı´«ÈëµÄlambda±í´ïÊ½ĞŞ¸ÄOptonalÊµÀıÄ¬ÈÏÖµ¡£
-        //lambda±í´ïÊ½·µ»ØÖµ»á°ü×°ÎªOptionalÊµÀı¡£
-        Optional<String> upperName = name.map((value) -> value.toUpperCase());
-        System.out.println(upperName.orElse("No value found"));
-
-        //flatMapÓëmap£¨Funtion£©·Ç³£ÏàËÆ£¬Çø±ğÔÚÓÚlambda±í´ïÊ½µÄ·µ»ØÖµ¡£
-        //map·½·¨µÄlambda±í´ïÊ½·µ»ØÖµ¿ÉÒÔÊÇÈÎºÎÀàĞÍ£¬µ«ÊÇ·µ»ØÖµ»á°ü×°³ÉOptionalÊµÀı¡£
-        //µ«ÊÇflatMap·½·¨µÄlambda·µ»ØÖµ×ÜÊÇOptionalÀàĞÍ¡£
-        upperName = name.flatMap((value) -> Optional.of(value.toUpperCase()));
-        System.out.println(upperName.orElse("No value found"));
-
-        //filter·½·¨¼ì²éOptionaÖµÊÇ·ñÂú×ã¸ø¶¨Ìõ¼ş¡£
-        //Èç¹ûÂú×ã·µ»ØOptionalÊµÀıÖµ£¬·ñÔò·µ»Ø¿ÕOptional¡£
-        Optional<String> longName = name.filter((value) -> value.length() > 6);
-        System.out.println(longName.orElse("The name is less than 6 characters"));
-
-        //ÁíÒ»¸öÊ¾Àı£¬OptionalÖµ²»Âú×ã¸ø¶¨Ìõ¼ş¡£
-        Optional<String> anotherName = Optional.of("Sana");
-        Optional<String> shortName = anotherName.filter((value) -> value.length() > 6);
-        System.out.println(shortName.orElse("The name is less than 6 characters"));
 
     }
-
 }
-
