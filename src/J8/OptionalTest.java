@@ -54,11 +54,11 @@ public class OptionalTest {
             System.out.println(empty.orElse("There is no value present!"));
             //输出：Sanaulla
             System.out.println(name.orElse("There is some value!"));
-//orElseGet与orElse方法类似，区别在于orElse传入的是默认值，
-//orElseGet可以接受一个lambda表达式生成默认值。
-//输出：Default Value
+            //orElseGet与orElse方法类似，区别在于orElse传入的是默认值，
+            //orElseGet可以接受一个lambda表达式生成默认值。
+            //输出：Default Value
             System.out.println(empty.orElseGet(() -> "Default Value"));
-//输出：Sanaulla
+            //输出：Sanaulla
             System.out.println(name.orElseGet(() -> "Default Value"));
             try {
                 //orElseThrow与orElse方法类似。与返回默认值不同，
