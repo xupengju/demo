@@ -4,11 +4,11 @@ package test;
  * Created by Milo on 2017/3/24.
  */
 public enum CouponStatus {
-    unused("过期"),
-    access("可用"),
-    used("已用"),
-    overdue("过期"),
-    delete("删除");
+    unused("55"),
+    access("444"),
+    used("333"),
+    overdue("222"),
+    delete("111");
 
     private String state;
 

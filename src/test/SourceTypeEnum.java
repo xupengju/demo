@@ -3,14 +3,14 @@ package test;
 
 /**
  * Created by Milo on 2017/3/31.
- * TranscodeQueue ×ªÂë¶ÓÁÐ
+ * TranscodeQueue ×ªï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public enum SourceTypeEnum  {
 
-    THREAD(0, "Ìû×Ó"),
-    TOPIC(1, "Ð¡»°Ìâ"),
-    WEIWEN(2, "Î¢ÎÄ"),
-    FORWAED(3, "×ª·¢");
+    THREAD(0, "11"),
+    TOPIC(1, "22"),
+    WEIWEN(2, "33"),
+    FORWAED(3, "44");
 
     private int index;
     private String name;
