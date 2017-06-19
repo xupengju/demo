@@ -14,12 +14,16 @@ public class Demo {
 //       System.out.print(setArr(406)[3]+",");
 //       System.out.print(setArr(406)[4]+",");
        // System.out.println(UUID.randomUUID().toString().replace("-",""));
-
-        try {
-            System.out.println(new String ("&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#x13F;&#x427;&#xFFFD;&#xFFFD;&#x37C;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;.rar".getBytes("ISO-8859-1"),"UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+//            System.out.println(new String ("&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#x13F;&#x427;&#xFFFD;&#xFFFD;&#x37C;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;&#xFFFD;.rar".getBytes("ISO-8859-1"),"UTF-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        String demo = null;
+        String s= 1+"_"+1 +"_";
+        String[] strings = s.split("_");
+        System.out.println(strings[2]);
 
     }
     public static int[] setArr(int a){
@@ -38,7 +42,7 @@ public class Demo {
 
        return arr;
     }
-    //µ±Ç°¹Ø¿¨  now      1   2   3   4   5
+
     public void countwave(int now){
 
         String newStr = String.valueOf(now);
@@ -48,5 +52,7 @@ public class Demo {
         }
 
     }
+
+
 
 }
