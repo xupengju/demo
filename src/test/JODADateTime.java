@@ -22,6 +22,16 @@ public class JODADateTime {
         cal2.setTime(new Date());
         DateTime dateTime = new DateTime(cal.getTime());
         DateTime dateTime2 = new DateTime(new Date().getTime());
-        System.out.println(Seconds.secondsBetween(dateTime2,dateTime).getSeconds() % 60+ " √Î.");
+        System.out.println(Seconds.secondsBetween(dateTime2,dateTime).getSeconds() % 60+ " ");
+
+
+        DateTime startTime = new DateTime();
+        DateTime endTime = startTime.hourOfDay().addToCopy(-2);
+        System.out.println(startTime);
+        System.out.println(endTime);
+
+
+
+
     }
 }
