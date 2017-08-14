@@ -9,9 +9,9 @@ public class Test {
         System.out.println(OrderStatus.unshipped.ordinal());
         //String str = "&#19978;&#28023;&#22768;&#20687;&#20986;";
         //String newStr = StringEscapeUtils.unescapeXml(str);
-// ÏÂ±ßÕâ¸öÒ²ÐÐ
+// ï¿½Â±ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½
 // String newStr=StringEscapeUtils.unescapeHtml(str);
-        //×ªÒåÖ®ºóµÄ×Ö·û
+        //×ªï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
        // System.out.println(newStr);
 
 
@@ -62,6 +62,7 @@ public class Test {
         Integer c = 128;
         Integer d = 128;
         System.out.println(c == d );
+        System.out.println(c.equals(d));
 
     }
 }

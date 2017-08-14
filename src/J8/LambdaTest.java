@@ -1,5 +1,7 @@
 package J8;
 
+import com.google.common.collect.Lists;
+
 import java.util.*;
 
 /**
@@ -43,6 +45,9 @@ public class LambdaTest {
 
         Arrays.sort(words, String::compareToIgnoreCase);
         System.out.println(Arrays.toString(words));
+        ArrayList arrayList = Lists.newArrayList();
+        System.out.println(arrayList.get(0));
+        System.out.println((new ArrayList<>()).get(0));
     }
 }
 
