@@ -316,11 +316,12 @@ public class SubAtContentUtils {
                 "https://m.weibo.cn/status/4139156961582618?wm=3333_2001&from=1077193010&sourcetype=qq&featurecode=newtitle\n" +
                 "http://www.360.cn/newslist/zxzx/sqggmhhspgqlgmthnrcqw.html\n" +
                 "https://www.zhihu.com/question/63346947/answer/210827768";
-        System.out.println(tailor(content,140));
-        System.out.println(tailor(content2,140));
-        System.out.println(tailor(conent3,140));
-        System.out.println(tailor(content5,140));
-        System.out.println(tailor(test1,140));
+        System.out.println(tailor("1\n2\n3\n4\n5\n6\n7\n8\n9\n0",140));
+//        System.out.println(tailor(content,140));
+//        System.out.println(tailor(content2,140));
+//        System.out.println(tailor(conent3,140));
+//        System.out.println(tailor(content5,140));
+//        System.out.println(tailor(test1,140));
     }
 
     private static int counter = 0;
@@ -344,8 +345,7 @@ public class SubAtContentUtils {
         while (i++ < 6 && (si = content.indexOf('\n', begin)) != -1) {
             begin = si + 1;
         }
-        return content.substring(0, si);
-
+        return si==-1?content:content.substring(0, si);
     }
 
 

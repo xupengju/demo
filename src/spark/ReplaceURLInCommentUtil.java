@@ -40,8 +40,8 @@ public class ReplaceURLInCommentUtil {
     }
 
     public static void main(String[] args) {
-        String comment = "http://15feng.cn/p/FtozYtc-m1Dbg_qltFFEKE50x7MK\n" +
-                "http://15feng.cn/v/FvlKgdtEDsjZ-dpJRlUkFW9yDDG0";
+        String comment = "15feng.cn" ;
+
         String result =  replaceURL(comment);
         System.out.println(result);
     }
