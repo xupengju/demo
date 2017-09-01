@@ -2,7 +2,6 @@ package J8;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -60,80 +59,27 @@ public class StreamTest {
         //List<List<Integer>> collect1 = firstNumbers.stream().flatMap(num -> secondNumbers.stream().map(num2 -> Arrays.asList(num, num2))).filter(list -> list.forEach(l -> SubThreepredicate :: test(l))).collect(Collectors.toList());
         //System.out.println(collect1);
         List<int[]> pairss = numbers1.stream().flatMap(i -> numbers2.stream().filter(j -> (j + i) % 3 == 0).map(j -> new int[]{i, j})).collect(toList());
-        pairss.stream().forEach(System.out :: println);
+        pairss.stream().forEach(System.out::println);
+
+        menu.stream().filter(Dish::isVegetarian).findAny().ifPresent(d -> System.out.println(d.getName()));
+//        if (dish.isPresent()) {
+//            System.out.println(dish.get());
+//        }
+        // 归约
+        Integer sum = numbers1.stream().reduce(0, (a, b) -> (a + b));
+        System.out.println(sum);
+        // 最大值  最小值
+        numbers2.stream().reduce(Integer::max).ifPresent(d -> System.out.println(d));
+        numbers2.stream().reduce(Integer::min).ifPresent(d -> System.out.println(d));
+        // 计算菜的个数
+        menu.stream().map(dish -> 1).reduce((a, b) -> a + b).ifPresent(count -> System.out.println(count));
+
+        long count = menu.stream().count();
+        System.out.println(count);
+        // FIXME: 2017/9/1  stream()换成了parallelStream()  并行化操作(同步)
+
 
     }
 }
 
-class SubThreepredicate implements Predicate {
 
-    @Override
-    public boolean test(Object o) {
-        return (Integer) o % 3 == 0;
-    }
-
-    @Override
-    public Predicate and(Predicate other) {
-        return null;
-    }
-
-    @Override
-    public Predicate negate() {
-        return null;
-    }
-
-    @Override
-    public Predicate or(Predicate other) {
-        return null;
-    }
-}
-
-
-class Dish {
-
-    private final String name;
-    private final boolean vegetarian;
-    private final int calories;
-    private final Type type;
-
-    public Dish(String name, boolean vegetarian, int calories, Type type) {
-        this.name = name;
-        this.vegetarian = vegetarian;
-        this.calories = calories;
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isVegetarian() {
-        return vegetarian;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public enum Type {MEAT, FISH, OTHER}
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public static final List<Dish> menu =
-            Arrays.asList(new Dish("pork", false, 800, Dish.Type.MEAT),
-                    new Dish("beef", false, 700, Dish.Type.MEAT),
-                    new Dish("chicken", false, 400, Dish.Type.MEAT),
-                    new Dish("french fries", true, 530, Dish.Type.OTHER),
-                    new Dish("rice", true, 350, Dish.Type.OTHER),
-                    new Dish("season fruit", true, 120, Dish.Type.OTHER),
-                    new Dish("pizza", true, 550, Dish.Type.OTHER),
-                    new Dish("prawns", false, 400, Dish.Type.FISH),
-                    new Dish("salmon", false, 450, Dish.Type.FISH));
-}
