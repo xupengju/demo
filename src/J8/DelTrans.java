@@ -2,7 +2,12 @@ package J8;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 
 /**
  * Created by Milo on 2017/9/1.
@@ -24,30 +29,113 @@ public class DelTrans {
         );
 
 
-        //(1) 找出2011年发生的所有交易，并按交易额排序(从低到高)。
+
+
+        /**
+         *  (1) 找出2011年发生的所有交易，并按交易额排序(从低到高)。
+         */
         List<Integer> collect = transactions.stream()
                                             .filter(transaction -> transaction.getYear() == 2011)
                                             .map(trans -> trans.getValue())
-                                            .sorted((t1, t2) -> t1.compareTo(t2)).collect(Collectors.toList());
+                                            .sorted((t1, t2) -> t1.compareTo(t2)).collect(toList());
         System.out.println(collect);
-        //(2) 交易员都在哪些不同的城市工作过?
-        List<String> citys = transactions.stream().map(Transaction::getTrader).map(trader -> trader.getCity()).distinct().collect(Collectors.toList());
+        //TODO: 2017/9/4  标准答案
+        List<Transaction> collect1 = transactions.stream()
+                                                 .filter(transaction -> transaction.getYear() == 2011)
+                                                 .sorted(comparing(Transaction::getValue))
+                                                 .collect(toList());
+        System.out.println(collect1);
+
+
+
+
+        /**
+         *  (2) 交易员都在哪些不同的城市工作过?
+         */
+        List<String> citys = transactions.stream().map(Transaction::getTrader).map(trader -> trader.getCity()).distinct().collect(toList());
         System.out.println(citys);
-        //(3) 查找所有来自于剑桥的交易员，并按姓名排序。
-        List<Trader> traders = transactions.stream().map(Transaction::getTrader).filter(t -> "Cambridge".equals(t.getCity())).distinct().sorted((tender1,tender2) -> tender1.getName().compareTo(tender2.getName())).collect(Collectors.toList());
+        //TODO: 2017/9/4  标准答案
+        List<String> cities = transactions.stream().map(transaction -> transaction.getTrader().getCity()).distinct().collect(toList());
+        Set<String> set = transactions.stream().map(transaction -> transaction.getTrader().getCity()).distinct().collect(Collectors.toSet());
+        System.out.println(cities);
+
+
+
+
+
+        /**
+         * (3) 查找所有来自于剑桥的交易员，并按姓名排序。
+         */
+        List<Trader> traders = transactions.stream().map(Transaction::getTrader).filter(t -> "Cambridge".equals(t.getCity())).distinct().sorted((tender1, tender2) -> tender1.getName().compareTo(tender2.getName())).collect(toList());
         System.out.println(traders);
-        //(4) 返回所有交易员的姓名字符串，按字母顺序排序。
-        List<String> list = transactions.stream().map(Transaction::getTrader).distinct().sorted((tender1,tender2) -> tender1.getName().compareTo(tender2.getName())).map(trader -> trader.getName()).collect(Collectors.toList());
+        //TODO: 2017/9/4  标准答案
+        List<Trader> traderList = transactions.stream()
+                                              .map(transaction -> transaction.getTrader())
+                                              .filter(trader -> "Cambridge".equals(trader.getCity()))
+                                              .distinct()
+                                              .sorted(comparing(Trader::getName))
+                                              .collect(toList());
+        System.out.println(traderList);
+
+
+
+
+        /**
+         * (4) 返回所有交易员的姓名字符串，按字母顺序排序。
+         */
+        List<String> list = transactions.stream().map(Transaction::getTrader).distinct().sorted((tender1, tender2) -> tender1.getName().compareTo(tender2.getName())).map(trader -> trader.getName()).collect(toList());
         System.out.println(list);
-        //(5) 有没有交易员是在米兰工作的?
+        //TODO: 2017/9/4  标准答案
+        String tranderStr = transactions.stream()
+                                        .map(transaction -> transaction.getTrader().getName())
+                                        .distinct()
+                                        .sorted()
+                                        .reduce("", (n1, n2) -> n1 + n2);
+        System.out.println("tranderStr is " + tranderStr);
+
+
+
+
+        /**
+         * (5) 有没有交易员是在米兰工作的?
+         */
         boolean result = transactions.stream().map(Transaction::getTrader).anyMatch(trader -> "Milan".equals(trader.getCity()));
         System.out.println(result);
-        //(6) 打印生活在剑桥的交易员的所有交易额。
-        List<Trader> collect1 = transactions.stream().map(Transaction::getTrader).filter(t -> "Cambridge".equals(t.getCity())).collect(Collectors.toList());
-        System.out.println(collect1);
-        //(7) 所有交易中，最高的交易额是多少?
-        //(8) 找到交易额最小的交易。
+        //TODO: 2017/9/4  标准答案
+        boolean milan = transactions.stream().anyMatch(transaction -> transaction.getTrader().getCity().equals("Milan"));
+        System.out.println(milan);
 
+
+
+        /**
+         * (6) 打印生活在剑桥的交易员的所有交易额。
+         */
+        transactions.stream().filter(t -> "Cambridge".equals(t.getTrader().getCity())).map(Transaction::getValue).forEach(System.out::println);
+
+        //TODO: 2017/9/4  标准答案
+        transactions.stream()
+                    .filter(t -> "Cambridge".equals(t.getTrader().getCity()))
+                    .map(Transaction::getValue)
+                    .forEach(System.out::println);
+
+
+        /**
+         *(7)所有交易中，最高的交易额是多少?
+         */
+        transactions.stream().max(comparing(Transaction::getValue)).ifPresent(System.out::print);
+        System.out.println();
+        //TODO: 2017/9/4  标准答案
+        transactions.stream().map(transaction -> transaction.getValue()).reduce(Integer::max).ifPresent(System.out::print);
+
+
+        /**
+         *(8) 找到交易额最小的交易。
+         */
+        transactions.stream().min(comparing(Transaction::getValue)).ifPresent(System.out::print);
+        System.out.println();
+        //TODO: 2017/9/4  标准答案
+        transactions.stream()
+                    .reduce((t1, t2) -> t1.getValue() < t2.getValue() ? t1 : t2).ifPresent(System.out::print);
 
     }
 
