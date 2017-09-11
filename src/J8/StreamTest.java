@@ -1,6 +1,7 @@
 package J8;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,7 +78,9 @@ public class StreamTest {
         long count = menu.stream().count();
         System.out.println(count);
         // FIXME: 2017/9/1  stream()换成了parallelStream()  并行化操作(同步)
-
+        String s  = "1,2,3,4,5,6";
+        List<String> strings = Arrays.stream(s.split(",")).collect(toList()).stream().limit(3).distinct().collect(toList());
+        System.out.println(strings);
 
     }
 }
