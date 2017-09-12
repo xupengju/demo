@@ -1,5 +1,6 @@
 package J8;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -81,6 +82,12 @@ public class StreamTest {
         String s  = "1,2,3,4,5,6";
         List<String> strings = Arrays.stream(s.split(",")).collect(toList()).stream().limit(3).distinct().collect(toList());
         System.out.println(strings);
+
+        List<String> list = new ArrayList<>();
+        System.out.println(null == list);
+        for (String sw :list){
+            System.out.println(sw);
+        }
 
     }
 }
