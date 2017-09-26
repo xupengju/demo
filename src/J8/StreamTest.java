@@ -1,12 +1,9 @@
 package J8;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 /**
  * Created by Milo on 2017/5/4.
@@ -89,6 +86,27 @@ public class StreamTest {
             System.out.println(sw);
         }
 
+        Map<Dish.Type, Long> typeLongMap = menu.stream().collect(groupingBy(Dish::getType, counting()));
+        System.out.println(typeLongMap);
+        Map<Dish.Type, Optional<Dish>> collect2 = menu.stream().collect(groupingBy(Dish::getType, maxBy(Comparator.comparing(Dish::getCalories))));
+        System.out.println(collect2);
+
+        List<Long> ommunityids = Arrays.asList(1l,2l,3l);
+
+
+        List<String> communityids = Arrays.asList("1l","2","3");
+        String collect3 = communityids.stream().collect(Collectors.joining(","));
+        System.out.println(collect3);
+
+
+
+        String communityidsStr = communityids.stream().collect(Collectors.joining(" OR communityid:"));
+        StringBuilder sBuilder = new StringBuilder();
+        sBuilder.append("(");
+        sBuilder.append("communityid:").append(communityidsStr);
+        sBuilder.append(")");
+        System.out.println(communityidsStr);
+        System.out.println(sBuilder.toString());
     }
 }
 

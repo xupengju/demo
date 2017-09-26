@@ -40,7 +40,7 @@ public class OptionalTest {
             System.out.println(empty.get());
         } catch (NoSuchElementException ex) {
             System.out.println(ex.getMessage());
-
+        }
             //ifPresent方法接受lambda表达式作为参数。
             //lambda表达式对Optional的值调用consumer进行处理。
             name.ifPresent((value) -> {
@@ -90,7 +90,6 @@ public class OptionalTest {
             //输出：name长度不足6字符
             System.out.println(shortName.orElse("The name is less than 6 characters"));
 
-        }
 
     }
 }
