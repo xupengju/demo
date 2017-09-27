@@ -126,8 +126,12 @@ public class StreamTest {
         Map<Dish.Type, Optional<Dish>> collect6 = menu.stream().collect(groupingBy(Dish::getType, maxBy(Comparator.comparing(Dish::getCalories))));
         System.out.println(collect6);
         //因为分组操作的Map结果中的每个值上包装的Optional没什么用，所以你可能想要把它们去掉。要做到这一点，或者更一般地来说，把收集器返回的结果转换为另一种类型，你可以使用 Collectors.collectingAndThen工厂方法返回的收集器，
+        //reducing 收集器永远都不会返回Optional.empty()
         Map<Dish.Type, Dish> collect7 = menu.stream().collect(groupingBy(Dish::getType, collectingAndThen(maxBy(Comparator.comparing(Dish::getCalories)), Optional::get)));
         System.out.println(collect7);
+
+
+
 
     }
 }
