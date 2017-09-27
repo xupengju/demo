@@ -107,6 +107,28 @@ public class StreamTest {
         sBuilder.append(")");
         System.out.println(communityidsStr);
         System.out.println(sBuilder.toString());
+
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> collect4 = menu.stream().collect(
+                groupingBy(Dish::getType,
+                        groupingBy(dish -> {
+                                    if (dish.getCalories() < 400) return CaloricLevel.NORMAL;
+                                    else if (dish.getCalories() <= 700) return CaloricLevel.DIET;
+                                    else return CaloricLevel.FAT;
+                                }
+
+                        )));
+        System.out.println(collect4);
+        //要数一数菜单中每类菜有多少个，可以传递counting收集器作为 groupingBy收集器的第二个参数
+        Map<Dish.Type, Long> collect5 = menu.stream().collect(groupingBy(Dish::getType, counting()));
+        System.out.println(collect5);
+
+        //你可以把前面用于查找菜单中热量最高的菜肴的收集器改一改，按照菜的类 型分类:
+        Map<Dish.Type, Optional<Dish>> collect6 = menu.stream().collect(groupingBy(Dish::getType, maxBy(Comparator.comparing(Dish::getCalories))));
+        System.out.println(collect6);
+        //因为分组操作的Map结果中的每个值上包装的Optional没什么用，所以你可能想要把它们去掉。要做到这一点，或者更一般地来说，把收集器返回的结果转换为另一种类型，你可以使用 Collectors.collectingAndThen工厂方法返回的收集器，
+        Map<Dish.Type, Dish> collect7 = menu.stream().collect(groupingBy(Dish::getType, collectingAndThen(maxBy(Comparator.comparing(Dish::getCalories)), Optional::get)));
+        System.out.println(collect7);
+
     }
 }
 
